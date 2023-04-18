@@ -1,0 +1,15 @@
+asgiref
+Django
+mysql-connector-python
+numpy
+pandas
+Pillow
+protobuf
+psycopg2
+python-dateutil
+pytz
+six
+sqlparse
+tzdata
+django-debug_toolbar
+django-crispy-forms

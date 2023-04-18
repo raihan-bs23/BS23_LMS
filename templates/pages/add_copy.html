@@ -1,0 +1,24 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block basetemplate %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Add Copy</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.book.label_tag }}
+          {{ form.book }}
+        </div>
+        <div class="form-group">
+          {{ form.copy.label_tag }}
+          {{ form.copy }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Copy</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

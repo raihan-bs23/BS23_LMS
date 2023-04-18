@@ -1,0 +1,156 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{% block title %}
+{{ product.name }}
+{{msg}}
+{% endblock %}
+{% block basetemplate %}
+<div class="container">
+    <main class="pt-5">
+        <div class="row g-3">
+            <div class="col-md-5 col-lg-5 order-md-first bg-light">
+                <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}">
+                <div class="row p-3">
+                    <div class="col">
+                        <form method="post" action="{% url 'library:book_detail' product.slug %}">
+                            {% csrf_token %}
+                            <h2>Write a Review</h2>
+                            <div class="mb-3">
+                                <label for="reviewText" class="form-label">Review Text</label>
+                                <textarea class="form-control" name="content" rows="3"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating:</label>
+                                <select class="form-select" aria-label="Rating" name="rating">
+                                    <option selected disabled>Select rating</option>
+                                    <option value="1">1 star</option>
+                                    <option value="2">2 stars</option>
+                                    <option value="3">3 stars</option>
+                                    <option value="4">4 stars</option>
+                                    <option value="5">5 stars</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
+                <h1 class="mb-0 h4" style="font-size: 24px; color: blue;">{{ product.title }}</h1>
+                {% comment %} <p><span class="lead">Author:</span> {{ product.author }}</p>
+                <p><span class="lead">Published By:</span> {{ product.publisher }}</p>
+                <p><span class="lead">Edition:</span>{{ product.edition }} </p> {% endcomment %}
+                <p><strong><span class="lead">Total Copies:</span></strong> <span style="font-size: 24px; font-weight: bold; color: green">{{ product.copies.count }}</span></p>
+                <p><strong><span class="lead">Description:</span></strong> <span style="color:black;font-weight:bold;">{{ product.description }}</span></p>
+                <div class="border">
+                    <div class="row p-3">
+
+                            <div class="col-6">
+                                <a id="button" href="{% url 'library:borrow_copy' product.slug  %}" class="btn btn-secondary btn-sm" data-url="{% url 'library:borrow_copy' product.slug  %}">Borrow Book</a>
+                                {% if msg %}
+                             <p>{{ msg }}</p>
+                               {% endif %}
+                                
+                            </div>                                
+                        </div>                              
+                    </div>                   
+                </div>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            <big><strong>{{ message }}</strong></big>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+
+                <div class="row p-3">
+                    <div class="row p-3">
+                    <div class="col">
+                        <h2>Reviews & Rating</h2>
+                        {% if product.reviews.all %}
+                            {% for review in page_obj %}
+                              <div class="rating">
+                                {% if review.rating == 1 %}
+                                <span class="fa fa-star" style="color: gold;"></span>
+                                <span class="fa fa-star star-white"></span>
+                                <span class="fa fa-star star-white"></span>
+                                <span class="fa fa-star star-white"></span>
+                                <span class="fa fa-star star-white"></span>
+
+
+                            {% elif review.rating == 2 %}
+
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star star-white"></span>
+                            <span class="fa fa-star star-white"></span>
+                            <span class="fa fa-star star-white"></span>
+
+                            {% elif review.rating == 3 %}
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star star-white"></span>
+                            <span class="fa fa-star star-white"></span>
+
+                            {% elif review.rating == 4 %}
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star star-white"></span>
+                            {% else %}
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            <span class="fa fa-star" style="color: gold;"></span>
+                            {% endif %}
+
+                            </div>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <p class="card-text">{{ review.content }}</p>
+                                        <p class="card-text"><small class="text-muted">by {{ review.user.username }}</small></p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No reviews yet.</p>
+                        {% endif %}
+                    </div>
+                </div> 
+                <div style="text-align: center;">
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
+                            {% endif %}
+
+                            <span class="current-page">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                  </div>
+
+                
+            </div>
+        </div>
+    </main>
+
+</div>
+{% endblock %}
+
+

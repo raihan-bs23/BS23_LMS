@@ -1,0 +1,47 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block basetemplate %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Add Book</h2>
+      <form method="post" enctype="multipart/form-data" action="{% url 'library:add_book'%}">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.category.label_tag }}
+          {{ form.category }}
+        </div>
+        <div class="form-group">
+          {{ form.title.label_tag }}
+          {{ form.title }}
+        </div>
+        <div class="form-group">
+          {{ form.author.label_tag }}
+          {{ form.author }}
+        </div>
+        <div class="form-group">
+          {{ form.description.label_tag }}
+          {{ form.description }}
+        </div>
+        <div class="form-group">
+          {{ form.image.label_tag }}
+          {{ form.image }}
+        </div>
+        <div class="form-group">
+          {{ form.publisher.label_tag }}
+          {{ form.publisher }}
+        </div>
+        <div class="form-group">
+            {{ form.slug.label_tag }}
+            {{ form.slug }}
+          </div>
+        <div class="form-group">
+          {{ form.edition.label_tag }}
+          {{ form.edition }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Book</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

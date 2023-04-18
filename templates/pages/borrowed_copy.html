@@ -1,0 +1,93 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block basetemplate %}
+
+<main>
+    <div class="event-schedule-area-two bg-color pad100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="section-title text-center">
+                    <div class="title-text">
+                        <h2>Borrowed Copy</h2>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- /.col end-->
+        </div>
+        <!-- row end-->
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+<!--                                        <th class="text-center" scope="col">Date</th>-->  
+                                        <th scope="col">Sl</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Copy No</th>
+                                        <th scope="col">Borrow date</th>
+                                        <th scope="col">Copy Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for borrow in borrowed_copies %}
+                                    <tr class="inner-box">
+                                        <td>
+                                           </h2>{{ forloop.counter }}</h2>
+                                        </td>
+                                        <td>
+                                            <div class="event-wrap">
+                                                <h5 style="color: green">{{borrow.copy.book.title}}</a></h5>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            
+                                                <h5>{{ borrow.copy.copy}}</h5>
+                                            
+                                        </td>
+                                        
+                                        
+                                <td><h5>{{ borrow.borrow_date.date  }}</h5></td>
+                                <td><h5>{{  borrow.copy.owner.username }}</h5></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="text-align: center;">
+                                <div class="pagination">
+                                  <span class="step-links">
+                                    {% if borrowed_copies.has_previous %}
+                                      <a href="?page=1" style="font-weight: bold; font-size: 16px">&laquo; first</a>
+                                      <a href="?page={{ borrowed_copies.previous_page_number }}" style="font-weight: bold; font-size: 16px">previous</a>
+                                    {% endif %}
+                                
+                                    <span class="current-page" style="font-weight: bold; font-size: 16px">
+                                      Page {{ borrowed_copies.number }} of {{ borrowed_copies.paginator.num_pages }}.
+                                    </span>
+                                
+                                    {% if borrowed_copies.has_next %}
+                                      <a href="?page={{ borrowed_copies.next_page_number }}" style="font-weight: bold; font-size: 16px">next</a>
+                                      <a href="?page={{ borrowed_copies.paginator.num_pages }}" style="font-weight: bold; font-size: 16px">last &raquo;</a>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </div> 
+                        </div>
+                    </div>
+
+                
+            </div>
+            <!-- /col end-->
+        </div>
+        <!-- /row end-->
+    </div>
+    </div>
+        <!-- Delete Modal HTML -->
+        
+
+</main>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block basetemplate %}
+
+<main>
+    <div class="event-schedule-area-two bg-color pad100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="section-title text-center">
+                    <div class="title-text">
+                        <h2>Owned Copy</h2>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- /.col end-->
+        </div>
+        <!-- row end-->
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+<!--                                        <th class="text-center" scope="col">Date</th>-->  
+                                        <th scope="col">Sl</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Copy No</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Borrowed date</th>
+                                        <th scope="col">Borrowed by</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for copy in owned_copies %}
+                                    <tr class="inner-box">
+                                        <td>
+                                           </h2>{{ forloop.counter }}</h2>
+                                        </td>
+                                        <td>
+                                            <div class="event-wrap">
+                                                <h5 style="color: green">{{copy.book.title}}</a></h5>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            
+                                                <h5>{{ copy.copy}}</h5>
+                                            
+                                        </td>
+                                        
+                                        {% if copy.status == 'borrowed' %}
+                                        <td>
+                                            <h5 style="color: red">{{copy.status}}</h5>
+                                        </td>
+                                <td><h5>{{ copy.borrow.first.borrow_date.date  }}</h5></td>
+                                <td><h5>{{ copy.borrow.first.borrower.username }}</h5></td>
+                                
+                                       {% else %}
+                                       <td>
+                                        <h5 style="color: black">{{copy.status}}</h5>
+                                      </td>
+                                       <td><h3>-</h3></td>
+                                       <td><h3>-</h3></td> 
+                                        
+                                       {% endif %} 
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <div style="text-align: center;">
+                                <div class="pagination">
+                                  <span class="step-links">
+                                    {% if owned_copies.has_previous %}
+                                      <a href="?page=1" style="font-weight: bold; font-size: 16px">&laquo; first</a>
+                                      <a href="?page={{ owned_copies.previous_page_number }}" style="font-weight: bold; font-size: 16px">previous</a>
+                                    {% endif %}
+                                
+                                    <span class="current-page" style="font-weight: bold; font-size: 16px">
+                                      Page {{ owned_copies.number }} of {{ owned_copies.paginator.num_pages }}.
+                                    </span>
+                                
+                                    {% if owned_copies.has_next %}
+                                      <a href="?page={{ owned_copies.next_page_number }}" style="font-weight: bold; font-size: 16px">next</a>
+                                      <a href="?page={{ owned_copies.paginator.num_pages }}" style="font-weight: bold; font-size: 16px">last &raquo;</a>
+                                    {% endif %}
+                                  </span>
+                                </div>
+                              </div> 
+                        </div>
+                    </div>
+
+                
+            </div>
+            <!-- /col end-->
+        </div>
+        <!-- /row end-->
+    </div>
+    </div>
+        <!-- Delete Modal HTML -->
+        
+
+</main>
+{% endblock %}

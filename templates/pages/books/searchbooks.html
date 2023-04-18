@@ -1,0 +1,81 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block basetemplate %}
+    <h1 align="center">Search Option</h1>
+    <form method="GET" align="center">
+        {%csrf_token%}
+
+        {{filters.form}}
+    <input type="submit" value='Search' name="">
+    </form>
+<main>
+    <div class="event-schedule-area-two bg-color pad100">
+        <div class="container-fluid">
+        <div class="row">
+        <div class="col-xl-20">
+        <div class="section-title text-center">
+        <div class="title-text">
+{% comment %}
+            <h2>Book List</h2>
+{% endcomment %}       
+        </div>
+        </div>
+        </div>
+        <!-- /.col end-->
+        </div>
+        <!-- row end-->
+        <div class="row">
+        <div class="col-xl-20">
+        <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade active show" id="home" role="tabpanel">
+        <div class="table-responsive">
+        <table class="table">
+        <thead>
+            <tr>
+            <!-- <th class="text-center" scope="col">Date</th>-->
+                <th scope="col">Sl</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author Name</th>
+                <th scope="col">Catagory</th>
+
+                <th class="text-center" scope="col">Action</th>
+            <!-- <th class="text-center" scope="col">Venue</th>-->
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in Books %}
+            <tr class="inner-box">
+                    <td>
+                        <h5>{{ forloop.counter }}</h5>
+                    </td>
+                    <td>
+                    <div class="event-wrap">
+                         <h3><a href="#">{{ i.title }}</a></h3>
+                    </div>
+                    </td>
+                    <td>
+                        <h6><a href="#">{{ i.author }}</a></h6>
+                    </td>
+                    <td>
+                        <h6><a href="#">{{ i.category }}</a></h6>
+                    </td>
+                    <td class="h5 mb-4 text-gray-800">
+                    <!-- <a href="#editEmployeeModal-{{ forloop.counter }}" class="edit btn btn-primary btn-sm" data-toggle="modal" >Edit</a>-->
+                    <a href="#deleteModal-{{ forloop.counter }}" class="edit btn btn-danger btn-sm" data-toggle="modal" >Delete</a>
+                    </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </div>
+        <!-- /col end-->
+        </div>
+        <!-- /row end-->
+        </div>
+        </div>
+</main>
+
+
+{%endblock%}

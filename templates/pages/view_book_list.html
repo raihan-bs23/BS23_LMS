@@ -1,0 +1,157 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block basetemplate %}
+
+<main>
+    <div class="event-schedule-area-two bg-color pad100">
+        <style>
+             .tab-content {
+                background-color: #28B463;
+                color: #fff;
+                font-size: 17px;
+                font-family: Times New Roman;
+            }
+        </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="section-title text-center">
+                    <div class="title-text">
+                        <h2>Book List</h2>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col end-->
+        </div>
+        <!-- row end-->
+        <div class="row">
+            <div class="col-xl-20">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+<!--                                        <th class="text-center" scope="col">Date</th>-->
+                                        <th scope="col">Sl</th>
+                                        <th scope="col">Cover</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Publisher</th>
+                                        {% comment %} <th scope="col">Category</th> {% endcomment %}
+                                        <th scope="col">Edition</th>
+                                        <th scope="col">In Stock</th>
+                                        <th class="text-center" scope="col">Action</th>
+<!--                                        <th class="text-center" scope="col">Venue</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 {% for product in products %}
+                                    <tr class="inner-box">
+                                        <td>
+                                           </h2>{{ forloop.counter }}</h2>
+                                        </td>
+                                        <td>
+                                            <div class="event-img">
+                                                <img src="{{ product.image.url}}" alt="" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="event-wrap">
+                                                <h3><a href="{{ product.get_absolute_url }}">{{ product.title}}</a></h3>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>{{ product.author}}</h5>
+                                        </td>
+                                        <td>
+                                            <h5>{{  product.publisher  }}</h5>
+                                        </td>
+
+                                        <td>
+                                            <h5>{{ product.edition }}</h5>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" {% if product.in_stock %}checked{% endif %} disabled>
+                                        </td>
+
+                                        <td class="h5 mb-4 text-gray-800">
+<!--                                            <a href="#editEmployeeModal-{{ forloop.counter }}" class="edit btn btn-primary btn-sm" data-toggle="modal" >Edit</a>-->
+                                            <a href="#deleteModal-{{ forloop.counter }}" class="edit btn btn-danger btn-sm" data-toggle="modal" >Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="pagination">
+                              <span class="step-links">
+                                {% if products.has_previous %}
+                                  <a href="?page=1" style="font-weight: bold; font-size: 16px">&laquo; first</a>
+                                  <a href="?page={{ products.previous_page_number }}" style="font-weight: bold; font-size: 16px">previous</a>
+                                {% endif %}
+
+                                <span class="current-page" style="font-weight: bold; font-size: 16px">
+                                  Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                                </span>
+
+                                {% if products.has_next %}
+                                  <a href="?page={{ products.next_page_number }}" style="font-weight: bold; font-size: 16px">next</a>
+                                  <a href="?page={{ products.paginator.num_pages }}" style="font-weight: bold; font-size: 16px">last &raquo;</a>
+                                {% endif %}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+
+            </div>
+            <!-- /col end-->
+        </div>
+        <!-- /row end-->
+    </div>
+    </div>
+
+        <!-- Delete Modal HTML -->
+        {%for product in products %}
+            <div id="deleteModal-{{forloop.counter}}" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form>
+                            <div class="modal-header">
+                                <h4 class="modal-title">Delete Book</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure, you want to delete <strong style="color:red;">{{getdata.1}}</strong>  Records?</p>
+                                <p class="text-danger"><medium>This action cannot be undone.</medium></p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <a href="#" class="edit btn btn-danger btn-sm"  value="Delete"  >Delete</a>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+
+
+</main>
+
+
+
+
+{% endblock %}
